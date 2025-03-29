@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c3eb4ejxtp2nl"]
+[gd_scene load_steps=31 format=3 uid="uid://c3eb4ejxtp2nl"]
 
 [ext_resource type="PackedScene" uid="uid://cn7ah7d3ep4de" path="res://godot_ap/ui/common_client.tscn" id="1_yxr36"]
 [ext_resource type="Script" uid="uid://1rwbhpu5vxk4" path="res://ui/sudoku_client.gd" id="2_drtqi"]
@@ -18,7 +18,9 @@
 [ext_resource type="PackedScene" uid="uid://7sxs07p5mo4o" path="res://ui/infobutton.tscn" id="13_7ct3a"]
 [ext_resource type="Script" uid="uid://cj06n2qh8ec5b" path="res://ui/debug_settings.gd" id="13_yousr"]
 [ext_resource type="Script" uid="uid://bem83ythwco6j" path="res://ui/actual_grid.gd" id="14_3xquc"]
+[ext_resource type="PackedScene" uid="uid://bp7uwhywtq6a6" path="res://Twitch/Twitch.tscn" id="15_7qw0e"]
 [ext_resource type="Script" uid="uid://d21n6ox3lmmwv" path="res://ui/button_toggle_disabled.gd" id="15_83fxp"]
+[ext_resource type="Script" uid="uid://b1sl8wsyuis1r" path="res://Twitch/twitch_connect_button.gd" id="15_yk55s"]
 [ext_resource type="SystemFont" uid="uid://73rjoc23d4ub" path="res://godot_ap/ui/console_font.tres" id="20_61nds"]
 [ext_resource type="Script" uid="uid://cety6nqnci3n6" path="res://godot_ap/ui/updown_lineedit.gd" id="21_arbtu"]
 [ext_resource type="Script" uid="uid://bvyjl05157b1k" path="res://ui/admin_control_panel.gd" id="22_arbtu"]
@@ -54,6 +56,9 @@ border_width_bottom = 4
 [sub_resource type="ButtonGroup" id="ButtonGroup_7l32q"]
 
 [node name="SudokuClient" node_paths=PackedStringArray("settings_subtabs", "fields", "sudoku_grid", "admin_panel", "admin_pwd_box", "admin_login_panel", "admin_control_panel", "admin_login_error") instance=ExtResource("1_yxr36")]
+custom_minimum_size = Vector2(2498, 1417)
+offset_right = 2498.0
+offset_bottom = 1417.0
 script = ExtResource("2_drtqi")
 settings_subtabs = NodePath("Tabs/Settings/Margin/Tabs")
 fields = [NodePath("Tabs/Settings/Margin/Tabs/Connection/HBoxContainer/VBoxContainer/HBoxContainer/InfoGrid/IP"), NodePath("Tabs/Settings/Margin/Tabs/Connection/HBoxContainer/VBoxContainer/HBoxContainer/InfoGrid/Port"), NodePath("Tabs/Settings/Margin/Tabs/Connection/HBoxContainer/VBoxContainer/HBoxContainer/InfoGrid/Slot"), NodePath("Tabs/Settings/Margin/Tabs/Connection/HBoxContainer/VBoxContainer/HBoxContainer/InfoGrid/Password"), NodePath("Tabs/Settings/Margin/Tabs/Connection/HBoxContainer/VBoxContainer/HBoxContainer/DeathLinkContainer/HBoxContainer/Lives"), NodePath("Tabs/Settings/Margin/Tabs/Connection/HBoxContainer/VBoxContainer/HBoxContainer/DeathLinkContainer/DeathLink")]
@@ -65,7 +70,8 @@ admin_control_panel = NodePath("Tabs/AdminPanel/MarginContainer/VBoxContainer/Ma
 admin_login_error = NodePath("Tabs/AdminPanel/MarginContainer/VBoxContainer/MarginContainer/AdminLoginScreen/AdminError")
 
 [node name="Tabs" parent="." index="0"]
-current_tab = 4
+custom_minimum_size = Vector2(2498, 1417)
+current_tab = 3
 
 [node name="Console" parent="Tabs" index="1"]
 visible = false
@@ -73,8 +79,11 @@ visible = false
 [node name="ConnectBox" parent="Tabs/Console" index="1"]
 visible = false
 
+[node name="Settings" parent="Tabs" index="4"]
+visible = true
+
 [node name="Tabs" parent="Tabs/Settings/Margin" index="0"]
-current_tab = 3
+current_tab = 4
 
 [node name="Theme" parent="Tabs/Settings/Margin/Tabs" index="1"]
 visible = false
@@ -447,6 +456,7 @@ theme = SubResource("Theme_ej5yg")
 text = "Throttle Puzzle Generation"
 
 [node name="Connection" type="MarginContainer" parent="Tabs/Settings/Margin/Tabs" index="4"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
@@ -657,8 +667,41 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Remove All"
 
+[node name="Twitch" type="MarginContainer" parent="Tabs/Settings/Margin/Tabs" index="5"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+metadata/_tab_index = 4
+
+[node name="Twitch" parent="Tabs/Settings/Margin/Tabs/Twitch" index="0" instance=ExtResource("15_7qw0e")]
+layout_mode = 2
+
+[node name="Row" type="VBoxContainer" parent="Tabs/Settings/Margin/Tabs/Twitch/Twitch" index="2"]
+layout_mode = 2
+offset_right = 2470.0
+offset_bottom = 1335.0
+
+[node name="Col" type="HBoxContainer" parent="Tabs/Settings/Margin/Tabs/Twitch/Twitch/Row" index="0"]
+layout_mode = 2
+
+[node name="LabelAuthfile" type="Label" parent="Tabs/Settings/Margin/Tabs/Twitch/Twitch/Row/Col" index="0"]
+layout_mode = 2
+tooltip_text = "The IP address running the Archipelago server."
+mouse_filter = 1
+text = "Authfile Missing"
+horizontal_alignment = 2
+
+[node name="TwitchConnectButton" type="Button" parent="Tabs/Settings/Margin/Tabs/Twitch/Twitch/Row/Col" index="1"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Connect"
+script = ExtResource("15_yk55s")
+
 [node name="Sudoku" type="MarginContainer" parent="Tabs" index="5"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 focus_mode = 2
 mouse_filter = 0
@@ -1622,6 +1665,7 @@ text = "REFRESH / REVERT CHANGES"
 [connection signal="pressed" from="Tabs/Settings/Margin/Tabs/Connection/HBoxContainer/VBoxContainer/HBoxContainer/InfoGrid/ConnectButton" to="." method="on_connect_button"]
 [connection signal="text_submitted" from="Tabs/Settings/Margin/Tabs/Connection/HBoxContainer/VBoxContainer/HBoxContainer/DeathLinkContainer/HBoxContainer/Lives" to="." method="try_connect" unbinds=1]
 [connection signal="toggled" from="Tabs/Settings/Margin/Tabs/Connection/HBoxContainer/VBoxContainer2/DebugSettingsToggle" to="Tabs/Settings/Margin/Tabs/Connection/HBoxContainer/VBoxContainer2/ConnectDebugSettings/VBoxContainer" method="set_visible"]
+[connection signal="pressed" from="Tabs/Settings/Margin/Tabs/Twitch/Twitch/Row/Col/TwitchConnectButton" to="Tabs/Settings/Margin/Tabs/Twitch/Twitch" method="_on_twitch_connect"]
 [connection signal="difficulty_changed" from="Tabs/Sudoku" to="." method="refresh_hint_count" unbinds=1]
 [connection signal="difficulty_changed" from="Tabs/Sudoku" to="." method="update_setting_label" unbinds=1]
 [connection signal="pressed" from="Tabs/Sudoku/HSplitContainer/MarginContainer2/HBoxContainer/VBoxContainer/VBoxContainer/RadioAnswer" to="." method="set_entry_mode_no_button" binds= [0]]

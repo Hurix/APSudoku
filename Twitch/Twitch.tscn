@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp7uwhywtq6a6"]
+
+[ext_resource type="Script" uid="uid://c00o7wdt36rk7" path="res://Twitch/Gift.gd" id="2_dmaep"]
+[ext_resource type="Script" uid="uid://bfuo6e1numhu7" path="res://Twitch/Twitch.gd" id="4"]
+
+[node name="Twitch" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2304.0
+offset_bottom = -1296.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4")
+
+[node name="Gift" type="Node" parent="."]
+script = ExtResource("2_dmaep")
